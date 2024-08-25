@@ -23,8 +23,11 @@ public class Beli extends javax.swing.JFrame {
             java.sql.ResultSet resultSet = stmt.executeQuery("SELECT nama_client, kota_client FROM client ORDER BY nama_client");
             while (resultSet.next()) {
                 String nama = resultSet.getString("nama_client");
-                nama = nama.concat("/");
-                nama = nama.concat(resultSet.getString("kota_client"));
+                String kota = resultSet.getString("kota_client");
+                if (kota != null) {
+                    nama = nama.concat("/");
+                    nama = nama.concat(kota);
+                }
                 namaSupp.addItem(nama);
             }
         } catch (java.sql.SQLException e) {
@@ -614,12 +617,26 @@ public class Beli extends javax.swing.JFrame {
             {
                 scan.useDelimiter("/");
                 String nama = scan.next();
-                String kota = scan.next();
-                java.sql.ResultSet resultSet = stmt.executeQuery("SELECT id FROM client WHERE "
-                        + "nama_client = '" + nama + "' AND kota_client = '" + kota + "'");
-                while (resultSet.next()) {
-                    id = resultSet.getInt("id");
+                String kota;
+                try {
+                    kota = scan.next();
+                    if (kota == null)
+                        throw new java.util.NoSuchElementException();
+                    
+                    java.sql.ResultSet resultSet = stmt.executeQuery("SELECT id FROM client WHERE "
+                            + "nama_client = '" + nama + "' AND kota_client = '" + kota + "'");
+                    while (resultSet.next()) {
+                        id = resultSet.getInt("id");
+                    }
+                    
+                } catch (java.util.NoSuchElementException ex) {
+                    java.sql.ResultSet resultSet = stmt.executeQuery("SELECT id FROM client WHERE "
+                            + "nama_client = '" + nama + "' AND kota_client IS NULL");
+                    while (resultSet.next()) {
+                        id = resultSet.getInt("id");
+                    }
                 }
+                
             } catch (java.sql.SQLException e) {
                 javax.swing.JOptionPane.showMessageDialog(null, "Gagal dapat id nama supplier", "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
                 return;
@@ -635,14 +652,16 @@ public class Beli extends javax.swing.JFrame {
                 int hargaBeliInt = Integer.parseInt(tblModel.getValueAt(i, 1).toString());
                 int stockInt = Integer.parseInt(tblModel.getValueAt(i, 3).toString());
                 
-//        TAMBAHIN STOCK DI DAFTAR STOCK
+//        TAMBAHIN STOCK DI DAFTAR STOCK DAN UPDATE HARGA BELI
                 try (java.sql.PreparedStatement stmt = cons.prepareStatement("UPDATE stock SET "
                             + "stock_akhir = stock_akhir + ?, "
-                            + "qty_in = qty_in + ? "
+                            + "qty_in = qty_in + ?, "
+                            + "harga_barang = ? "
                             + "WHERE nama_barang = ?")){
                     stmt.setInt(1, stockInt);
                     stmt.setInt(2, stockInt);
-                    stmt.setString(3, namaBarangString);
+                    stmt.setInt(3, hargaBeliInt);
+                    stmt.setString(4, namaBarangString);
                     stmt.executeUpdate();
                 } catch (java.sql.SQLException e) {
                     javax.swing.JOptionPane.showMessageDialog(null, "Gagal menambah stock " + namaBarangString, "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -667,6 +686,7 @@ public class Beli extends javax.swing.JFrame {
                 }
 
             }
+//        SELESAI LOOPING
 
 //        MASUKIN KE bnota
             try (java.sql.PreparedStatement stmt = cons.prepareStatement("INSERT INTO bnota "

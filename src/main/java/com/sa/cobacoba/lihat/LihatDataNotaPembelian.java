@@ -171,7 +171,9 @@ public class LihatDataNotaPembelian extends javax.swing.JPanel {
                 
                 String[] row = {nomorNotaTable, 
                                 GeneralFunction.sqlDate2String(sqlDate), 
-                                nama, kota, namaBarang, String.valueOf(qtyBarang), 
+                                nama, 
+                                (kota == null) ? "" : kota, 
+                                namaBarang, String.valueOf(qtyBarang), 
                                 String.valueOf(hargaBarang), 
                                 String.format("%,d", totalHarga)
                 };

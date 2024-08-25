@@ -11,9 +11,6 @@ package com.sa.cobacoba.lihat;
 public class LihatWindow extends javax.swing.JFrame {
 
     java.sql.Connection cons;
-    /**
-     * Creates new form LihatWindow
-     */
     public LihatWindow(java.sql.Connection conn) {
         cons = conn;
         initComponents();

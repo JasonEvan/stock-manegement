@@ -25,6 +25,7 @@ public class EditUtang extends javax.swing.JPanel {
         cons = conn;
         initComponents();
         peringatan.setVisible(false);
+        dataPanel.setVisible(false);
         try {
             cons.setAutoCommit(false);
         } catch (java.sql.SQLException e) {
@@ -255,6 +256,7 @@ public class EditUtang extends javax.swing.JPanel {
         jMenu2.setEnabled(false);
         jMenu3.setEnabled(false);
         jMenu4.setEnabled(false);
+        dataPanel.setVisible(true);
         
         // kosongin table
         javax.swing.table.DefaultTableModel tblModel = (javax.swing.table.DefaultTableModel) jTable1.getModel();

@@ -27,6 +27,7 @@ public class EditPenjualan extends javax.swing.JPanel {
         setComboBox(conn);
         setComboNamaBarang();
         peringatan.setVisible(false);
+        dataPanel.setVisible(false);
         try {
             cons.setAutoCommit(false);
         } catch (java.sql.SQLException e) {
@@ -40,8 +41,11 @@ public class EditPenjualan extends javax.swing.JPanel {
             java.sql.ResultSet resultSet = stmt.executeQuery("SELECT nama_client, kota_client FROM client ORDER BY nama_client");
             while (resultSet.next()) {
                 String nama = resultSet.getString("nama_client");
-                nama = nama.concat("/");
-                nama = nama.concat(resultSet.getString("kota_client"));
+                String kota = resultSet.getString("kota_client");
+                if (kota != null) {
+                    nama = nama.concat("/");
+                    nama = nama.concat(kota);
+                }
                 namaClient.addItem(nama);
             }
             namaClient.setSelectedIndex(-1);
@@ -486,26 +490,10 @@ public class EditPenjualan extends javax.swing.JPanel {
         }
         
 //        GET CLIENT ID
-        int id = 0;
-        String query = "SELECT id FROM client WHERE nama_client = ? AND kota_client = ?";
-        try (java.sql.PreparedStatement stmt = cons.prepareStatement(query);
-                java.util.Scanner scanner = new java.util.Scanner(nama))
-        {
-            scanner.useDelimiter("/");
-            String namaCli = scanner.next();
-            String kotaCli = scanner.next();
-            stmt.setString(1, namaCli);
-            stmt.setString(2, kotaCli);
-            java.sql.ResultSet resultSet = stmt.executeQuery();
-            while (resultSet.next()) {
-                id = resultSet.getInt("id");
-            }
-        } catch (java.sql.SQLException e) {
-            javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
+        int id = getIdClient();
         
 //        GET NOMOR NOTA
-        query = "SELECT nomor_nota FROM jnota WHERE id_client = ?";
+        String query = "SELECT nomor_nota FROM jnota WHERE id_client = ?";
         try (java.sql.PreparedStatement stmt = cons.prepareStatement(query))
         {
             stmt.setInt(1, id);
@@ -545,6 +533,7 @@ public class EditPenjualan extends javax.swing.JPanel {
         jMenu2.setEnabled(false);
         jMenu3.setEnabled(false);
         jMenu4.setEnabled(false);
+        dataPanel.setVisible(true);
         
         // kosongin table
         javax.swing.table.DefaultTableModel tblModel = (javax.swing.table.DefaultTableModel) jTable1.getModel();
@@ -706,27 +695,7 @@ public class EditPenjualan extends javax.swing.JPanel {
         
         
         // get id client
-        int idClient = 0;
-        String namaClientString = namaClient.getSelectedItem().toString();
-        try (java.sql.PreparedStatement stmt = cons.prepareStatement("SELECT id FROM client WHERE "
-                + "nama_client = ? AND kota_client = ?");
-                java.util.Scanner scan = new java.util.Scanner(namaClientString))
-        {
-            scan.useDelimiter("/");
-            String nama = scan.next();
-            String kota = scan.next();
-            
-            stmt.setString(1, nama);
-            stmt.setString(2, kota);
-            
-            java.sql.ResultSet resultSet = stmt.executeQuery();
-            while (resultSet.next()) {
-                idClient = resultSet.getInt("id");
-            }
-            
-        } catch (java.sql.SQLException e) {
-            javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
+        int idClient = getIdClient();
         
         
         // kurangi saldo akhir piutang client
@@ -739,6 +708,55 @@ public class EditPenjualan extends javax.swing.JPanel {
             javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
         
+    }
+    
+    private int getIdClient() {
+        String namaCli = null, kotaCli;
+        String query;
+        try (java.util.Scanner scanner = new java.util.Scanner(namaClient.getSelectedItem().toString()))
+        {
+            scanner.useDelimiter("/");
+            namaCli = scanner.next();
+            kotaCli = scanner.next();
+            
+            if (kotaCli == null)
+                throw new java.util.NoSuchElementException();
+            
+        } catch (java.util.NoSuchElementException e) {
+            kotaCli = null;
+        }
+        
+        int id = 0;
+        if (kotaCli == null) {
+            query = "SELECT id FROM client WHERE nama_client = ? AND kota_client IS NULL";
+            try (java.sql.PreparedStatement stmt = cons.prepareStatement(query))
+            {
+                stmt.setString(1, namaCli);
+                java.sql.ResultSet resultSet = stmt.executeQuery();
+                while (resultSet.next()) {
+                    id = resultSet.getInt("id");
+                }
+            } catch (java.sql.SQLException e) {
+                javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return 0;
+            }
+        } else {
+            query = "SELECT id FROM client WHERE nama_client = ? AND kota_client = ?";
+            try (java.sql.PreparedStatement stmt = cons.prepareStatement(query))
+            {
+                stmt.setString(1, namaCli);
+                stmt.setString(2, kotaCli);
+                java.sql.ResultSet resultSet = stmt.executeQuery();
+                while (resultSet.next()) {
+                    id = resultSet.getInt("id");
+                }
+            } catch (java.sql.SQLException e) {
+                javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return 0;
+            }
+        }
+        
+        return id;
     }
     
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
@@ -954,7 +972,8 @@ public class EditPenjualan extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void checkHargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkHargaActionPerformed
-        new PilihanMenuJual(cons).setVisible(true);
+        int idClient = getIdClient();
+        new PilihanMenuJual(cons, idClient).setVisible(true);
     }//GEN-LAST:event_checkHargaActionPerformed
 
     private boolean validateFormEdit() {

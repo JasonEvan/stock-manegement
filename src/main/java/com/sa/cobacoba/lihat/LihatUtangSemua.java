@@ -103,7 +103,7 @@ public class LihatUtangSemua extends javax.swing.JPanel {
                         
                         String[] row = {
                             nama,
-                            kota,
+                            (kota == null) ? "" : kota,
                             nomor_nota,
                             tanggal_nota,
                             nilai_nota,
@@ -118,7 +118,7 @@ public class LihatUtangSemua extends javax.swing.JPanel {
                     if (!adaPelunasan) {
                         String[] row = {
                             nama,
-                            kota,
+                            (kota == null) ? "" : kota,
                             nomor_nota,
                             tanggal_nota,
                             nilai_nota,

@@ -8,10 +8,7 @@ import java.awt.HeadlessException;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author jasel
- */
+
 public class TambahSalesPanel extends javax.swing.JPanel {
     private final java.sql.Connection conn;
     public TambahSalesPanel(java.sql.Connection conn) {
@@ -39,6 +36,8 @@ public class TambahSalesPanel extends javax.swing.JPanel {
         submitButton = new javax.swing.JButton();
         conPeringatan = new javax.swing.JPanel();
         peringatan = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        kodeSales = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(51, 51, 51));
         setPreferredSize(new java.awt.Dimension(580, 444));
@@ -101,6 +100,12 @@ public class TambahSalesPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
+        jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Kode Sales");
+
+        kodeSales.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -108,20 +113,19 @@ public class TambahSalesPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(namaSales, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-                            .addComponent(noDepan))
-                        .addGap(27, 27, 27))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(noTelpSales, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(namaSales, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(noTelpSales, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                        .addComponent(noDepan))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(kodeSales, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27))
             .addGroup(layout.createSequentialGroup()
                 .addGap(110, 110, 110)
                 .addComponent(conPeringatan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -152,9 +156,15 @@ public class TambahSalesPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(noDepan, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(41, 41, 41)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(noTelpSales, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(noTelpSales, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(kodeSales, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(conPeringatan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -184,20 +194,27 @@ public class TambahSalesPanel extends javax.swing.JPanel {
                 return;
             }
             
-            String query = "INSERT INTO salesman (nama_sales, no_depan, no_nota, no_telp_sales) VALUES (?, ?, ?, ?)";
+            String query = "INSERT INTO salesman (nama_sales, no_depan, no_nota, no_telp_sales, kode_sales) VALUES (?, ?, ?, ?, ?)";
             try {
                 java.sql.PreparedStatement stmt = conn.prepareStatement(query);
                 stmt.setString(1, namaSales.getText());
                 stmt.setInt(2, Integer.parseInt(noDepan.getText()));
                 stmt.setInt(3, 0);
-                stmt.setString(4, noTelpSales.getText());
+                
+                if (!noTelpSales.getText().isEmpty())
+                    stmt.setString(4, noTelpSales.getText());
+                else
+                    stmt.setNull(4, java.sql.Types.VARCHAR);
+                
+                stmt.setString(5, kodeSales.getText());
                 stmt.execute();
-                JOptionPane.showMessageDialog(null, "Berhasil menambahkan data", "Success", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Berhasil menambahkan data", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
                 namaSales.setText("");
                 noDepan.setText("");
                 noTelpSales.setText("");
+                kodeSales.setText("");
             } catch (HeadlessException | NumberFormatException | SQLException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_submitButtonActionPerformed
@@ -205,9 +222,9 @@ public class TambahSalesPanel extends javax.swing.JPanel {
     private boolean validateAll() {
         String sales = namaSales.getText();
         String noDepanString = noDepan.getText();
-        String noTelp = noTelpSales.getText();
+        String kode = kodeSales.getText();
         
-        if (sales.isEmpty() || noDepanString.isEmpty() || noTelp.isEmpty()) {
+        if (sales.isEmpty() || noDepanString.isEmpty() || kode.isEmpty()) {
             peringatan.setText("*Tidak boleh ada field yang kosong!");
             conPeringatan.setVisible(true);
             conPeringatan.revalidate();
@@ -240,6 +257,8 @@ public class TambahSalesPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JTextField kodeSales;
     private javax.swing.JTextField namaSales;
     private javax.swing.JTextField noDepan;
     private javax.swing.JTextField noTelpSales;

@@ -42,7 +42,6 @@ public class EditWindow extends javax.swing.JFrame {
         returPenjualan = new javax.swing.JMenuItem();
         returPembelian = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        editClient = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -116,10 +115,11 @@ public class EditWindow extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Daftar");
-
-        editClient.setText("Client");
-        jMenu4.add(editClient);
-
+        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu4MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu4);
 
         setJMenuBar(jMenuBar1);
@@ -196,8 +196,16 @@ public class EditWindow extends javax.swing.JFrame {
         jPanel2.repaint();
     }//GEN-LAST:event_returPembelianActionPerformed
 
+    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
+        EditDaftar daftar = new EditDaftar(cons, this, jMenu1, jMenu2, jMenu3, jMenu4);
+        
+        jPanel2.removeAll();
+        jPanel2.add(daftar, java.awt.BorderLayout.CENTER);
+        jPanel2.revalidate();
+        jPanel2.repaint();
+    }//GEN-LAST:event_jMenu4MouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem editClient;
     private javax.swing.JMenuItem editPembelian;
     private javax.swing.JMenuItem editPenjualan;
     private javax.swing.JMenuItem editPiutang;

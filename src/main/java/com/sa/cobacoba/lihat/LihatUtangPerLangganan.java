@@ -24,8 +24,11 @@ public class LihatUtangPerLangganan extends javax.swing.JPanel {
             java.sql.ResultSet resultSet = stmt.executeQuery("SELECT nama_client, kota_client FROM client ORDER BY nama_client");
             while (resultSet.next()) {
                 String nama = resultSet.getString("nama_client");
-                nama = nama.concat("/");
-                nama = nama.concat(resultSet.getString("kota_client"));
+                String kota = resultSet.getString("kota_client");
+                if (kota != null) {
+                    nama = nama.concat("/");
+                    nama = nama.concat(resultSet.getString("kota_client"));
+                }
                 namaSupp.addItem(nama);
             }
         } catch (java.sql.SQLException e) {
@@ -143,24 +146,49 @@ public class LihatUtangPerLangganan extends javax.swing.JPanel {
         
         
         // get id client
-        int idClient = 0;
-        try (java.sql.PreparedStatement stmt = cons.prepareStatement("SELECT id FROM client "
-                + "WHERE nama_client = ? AND kota_client = ?");
-                java.util.Scanner scan = new java.util.Scanner(namaSupplierString))
+        String namaCli = null, kotaCli;
+        String query;
+        try (java.util.Scanner scanner = new java.util.Scanner(namaSupplierString))
         {
-            scan.useDelimiter("/");
-            String nama = scan.next();
-            String kota = scan.next();
+            scanner.useDelimiter("/");
+            namaCli = scanner.next();
+            kotaCli = scanner.next();
             
-            stmt.setString(1, nama);
-            stmt.setString(2, kota);
-            java.sql.ResultSet resultSet = stmt.executeQuery();
-            while (resultSet.next()) {
-                idClient = resultSet.getInt("id");
-            }
-        } catch (java.sql.SQLException e) {
-            javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
+            if (kotaCli == null)
+                throw new java.util.NoSuchElementException();
+            
+        } catch (java.util.NoSuchElementException e) {
+            kotaCli = null;
         }
+        
+        int idClient = 0;
+        if (kotaCli == null) {
+            query = "SELECT id FROM client WHERE nama_client = ? AND kota_client IS NULL";
+            try (java.sql.PreparedStatement stmt = cons.prepareStatement(query))
+            {
+                stmt.setString(1, namaCli);
+                java.sql.ResultSet resultSet = stmt.executeQuery();
+                while (resultSet.next()) {
+                    idClient = resultSet.getInt("id");
+                }
+            } catch (java.sql.SQLException e) {
+                javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            query = "SELECT id FROM client WHERE nama_client = ? AND kota_client = ?";
+            try (java.sql.PreparedStatement stmt = cons.prepareStatement(query))
+            {
+                stmt.setString(1, namaCli);
+                stmt.setString(2, kotaCli);
+                java.sql.ResultSet resultSet = stmt.executeQuery();
+                while (resultSet.next()) {
+                    idClient = resultSet.getInt("id");
+                }
+            } catch (java.sql.SQLException e) {
+                javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
         
         long totalNilaiNota = 0, totalLunasNota = 0;
         boolean adaPelunasan = false;

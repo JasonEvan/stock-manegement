@@ -26,7 +26,6 @@ public class Jual extends javax.swing.JFrame {
         namaLangganan.setSelectedIndex(-1);
         namaSales.setSelectedIndex(-1);
         nomorNota.setSelectedIndex(-1);
-        tanggalNota.setSelectedIndex(-1);
     }
     
     private void setTodayDate() {
@@ -592,7 +591,7 @@ public class Jual extends javax.swing.JFrame {
             while (resultSet.next()) {
                 namaBarang.addItem(resultSet.getString("nama_barang"));
             }
-        } catch (Exception e) {
+        } catch (java.sql.SQLException e) {
             
         } finally {
             namaBarang.setSelectedIndex(-1);
@@ -934,21 +933,51 @@ public class Jual extends javax.swing.JFrame {
             java.sql.Date sqlDate = GeneralFunction.date2SQLDate(tanggalNotaString);
             
 //            SEARCH ID NAMA LANGGANAN
-            int id = 0;
-            try (java.util.Scanner scan = new java.util.Scanner(namaLanggananString);
-                    java.sql.Statement stmt = cons.createStatement()) {
-                scan.useDelimiter("/");
-                String nama = scan.next();
-                String kota = scan.next();
-                java.sql.ResultSet resultSet = stmt.executeQuery("SELECT id FROM client "
-                        + "WHERE nama_client = '" + nama
-                        + "' AND kota_client = '" + kota + "'");
-                while (resultSet.next()) {
-                    id = resultSet.getInt("id");
-                }
-            } catch (java.sql.SQLException e) {
-                javax.swing.JOptionPane.showMessageDialog(null, "Gagal dapat id nama langganan", "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
+            String namaCli = null, kotaCli;
+            String query;
+            try (java.util.Scanner scanner = new java.util.Scanner(namaLanggananString))
+            {
+                scanner.useDelimiter("/");
+                namaCli = scanner.next();
+                kotaCli = scanner.next();
+
+                if (kotaCli == null)
+                    throw new java.util.NoSuchElementException();
+
+            } catch (java.util.NoSuchElementException e) {
+                kotaCli = null;
             }
+
+            int id = 0;
+            if (kotaCli == null) {
+                query = "SELECT id FROM client WHERE nama_client = ? AND kota_client IS NULL";
+                try (java.sql.PreparedStatement stmt = cons.prepareStatement(query))
+                {
+                    stmt.setString(1, namaCli);
+                    java.sql.ResultSet resultSet = stmt.executeQuery();
+                    while (resultSet.next()) {
+                        id = resultSet.getInt("id");
+                    }
+                } catch (java.sql.SQLException e) {
+                    javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            } else {
+                query = "SELECT id FROM client WHERE nama_client = ? AND kota_client = ?";
+                try (java.sql.PreparedStatement stmt = cons.prepareStatement(query))
+                {
+                    stmt.setString(1, namaCli);
+                    stmt.setString(2, kotaCli);
+                    java.sql.ResultSet resultSet = stmt.executeQuery();
+                    while (resultSet.next()) {
+                        id = resultSet.getInt("id");
+                    }
+                } catch (java.sql.SQLException e) {
+                    javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+            
             
             String nomorNotaString;
             if (nota.getText().isEmpty()) {
@@ -1070,8 +1099,11 @@ public class Jual extends javax.swing.JFrame {
             java.sql.ResultSet resultSet = statement.executeQuery("SELECT * FROM client ORDER BY nama_client");
             while (resultSet.next()) {
                 String temp = resultSet.getString("nama_client");
-                temp = temp.concat("/");
-                temp = temp.concat(resultSet.getString("kota_client"));
+                String kota = resultSet.getString("kota_client");
+                if (kota != null) {
+                    temp = temp.concat("/");
+                    temp = temp.concat(resultSet.getString("kota_client"));
+                }
                 namaLangganan.addItem(temp);
             }
         } catch (java.sql.SQLException e) {

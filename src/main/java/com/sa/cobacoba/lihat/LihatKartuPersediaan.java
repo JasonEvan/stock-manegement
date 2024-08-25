@@ -154,33 +154,33 @@ public class LihatKartuPersediaan extends javax.swing.JPanel {
         tblModel.addRow(dataPertama);
         
         String query = "SELECT * FROM ( "
-                + "SELECT " 
-                + "jual.*, " 
-                + "client.nama_client, "
-                + "client.kota_client, "
-                + "jretur.qty_barang AS banyak_retur, " 
-                + "jretur.tanggal_retur " 
-                + "FROM jual " 
-                + "LEFT JOIN client " 
-                + "ON jual.id_client = client.id " 
-                + "LEFT JOIN jretur " 
-                + "ON jual.id = jretur.id_jual "
-                + "WHERE jual.nama_barang = ? " 
-                + "UNION ALL " 
-                + "SELECT " 
-                + "beli.*, NULL AS nama_sales, " 
-                + "client.nama_client, " 
-                + "client.kota_client, " 
-                + "bretur.qty_barang AS banyak_retur, " 
-                + "bretur.tanggal_retur " 
-                + "FROM beli " 
-                + "LEFT JOIN client " 
-                + "ON beli.id_client = client.id " 
-                + "LEFT JOIN bretur " 
-                + "ON beli.id = bretur.id_beli "
-                + "WHERE beli.nama_barang = ? "
-                + ") AS combined "
-                + "ORDER BY combined.tanggal_nota";
+                                + "SELECT " 
+                                    + "jual.*, " 
+                                    + "client.nama_client, "
+                                    + "client.kota_client, "
+                                    + "jretur.qty_barang AS banyak_retur, " 
+                                    + "jretur.tanggal_retur " 
+                                + "FROM jual " 
+                                + "LEFT JOIN client " 
+                                + "ON jual.id_client = client.id " 
+                                + "LEFT JOIN jretur " 
+                                + "ON jual.id = jretur.id_jual "
+                                + "WHERE jual.nama_barang = ? " 
+                                + "UNION ALL " 
+                                + "SELECT " 
+                                    + "beli.*, NULL AS nama_sales, " 
+                                    + "client.nama_client, " 
+                                    + "client.kota_client, " 
+                                    + "bretur.qty_barang AS banyak_retur, " 
+                                    + "bretur.tanggal_retur " 
+                                + "FROM beli " 
+                                + "LEFT JOIN client " 
+                                + "ON beli.id_client = client.id " 
+                                + "LEFT JOIN bretur " 
+                                + "ON beli.id = bretur.id_beli "
+                                + "WHERE beli.nama_barang = ? "
+                        + ") AS combined "
+                        + "ORDER BY combined.tanggal_nota";
         
         long totalQtyIn = 0, totalQtyOut = 0, qtyAkhirBanget = stockAwal;
         try (java.sql.PreparedStatement stmt = cons.prepareStatement(query)) {
@@ -236,7 +236,9 @@ public class LihatKartuPersediaan extends javax.swing.JPanel {
                 
                 String[] row = {nomorNotaString, 
                                 GeneralFunction.sqlDate2String(sqlDate), 
-                                namaString, kotaString, tipe, String.valueOf(harga), 
+                                namaString, 
+                                (kotaString == null) ? "" : kotaString, 
+                                tipe, String.valueOf(harga), 
                                 qtyIn != 0 ? String.valueOf(qtyIn) : "", 
                                 qtyOut != 0 ? String.valueOf(qtyOut) : "", 
                                 String.valueOf(qtyAkhir)};
@@ -264,7 +266,9 @@ public class LihatKartuPersediaan extends javax.swing.JPanel {
                     
                     String[] newRow = {nomorNotaString, 
                                         GeneralFunction.sqlDate2String(sqlDate), 
-                                        namaString, kotaString, tipe, String.valueOf(harga), 
+                                        namaString, 
+                                        (kotaString == null) ? "" : kotaString, 
+                                        tipe, String.valueOf(harga), 
                                         qtyIn != 0 ? String.valueOf(qtyIn) : "", 
                                         qtyOut != 0 ? String.valueOf(qtyOut) : "", 
                                         String.valueOf(qtyAkhir)};

@@ -187,10 +187,17 @@ public class LihatLaba extends javax.swing.JPanel {
                         int laba = GeneralFunction.getLaba(cons, nomorNotaString);
                         totalLaba += (long) laba;
                         
+                        String nama = result.getString("nama_client");
+                        String kota = result.getString("kota_client");
+                        if (kota != null) {
+                            nama = nama.concat("/");
+                            nama = nama.concat(kota);
+                        }
+                        
                         tblModel.addRow(new String[] {
                             nomorNotaString,
                             GeneralFunction.sqlDate2String(result.getDate("tanggal_nota")),
-                            result.getString("nama_client") + "/" + result.getString("kota_client"),
+                            nama,
                             String.format("%,d", nilaiNota),
                             String.format("%,d", laba)
                         });

@@ -86,13 +86,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Daftar"/>
           </Properties>
-          <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="editClient">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Client"/>
-              </Properties>
-            </MenuItem>
-          </SubComponents>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenu4MouseClicked"/>
+          </Events>
         </Menu>
       </SubComponents>
     </Menu>

@@ -4,14 +4,14 @@
  */
 package com.sa.cobacoba.edit;
 
-/**
- *
- * @author jasonevan
- */
+import com.sa.cobacoba.functions.GeneralFunction;
+
 public class PilihanMenuBeli extends javax.swing.JFrame {
 
     private java.sql.Connection cons = null;
-    public PilihanMenuBeli(java.sql.Connection conn) {
+    int idClient;
+    public PilihanMenuBeli(java.sql.Connection conn, int idClient) {
+        this.idClient = idClient;
         cons = conn;
         initComponents();
         setComboBox();
@@ -53,7 +53,7 @@ public class PilihanMenuBeli extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(51, 51, 51));
         jPanel2.setPreferredSize(new java.awt.Dimension(610, 130));
 
-        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Nama Barang");
 
@@ -70,9 +70,9 @@ public class PilihanMenuBeli extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(namaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(124, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(namaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(146, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -86,23 +86,24 @@ public class PilihanMenuBeli extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
-        jTable3.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jTable3.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Harga Beli"
+                "Harga Beli", "Tanggal"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false
+                false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        jTable3.setRowHeight(25);
         jScrollPane3.setViewportView(jTable3);
 
         jPanel1.add(jScrollPane3, java.awt.BorderLayout.CENTER);
@@ -111,7 +112,7 @@ public class PilihanMenuBeli extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,7 +123,7 @@ public class PilihanMenuBeli extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void namaBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_namaBarangActionPerformed
-        String namaBarangString = null;
+        String namaBarangString;
         try {
             namaBarangString = namaBarang.getSelectedItem().toString();
         } catch (java.lang.NullPointerException e) {
@@ -131,13 +132,17 @@ public class PilihanMenuBeli extends javax.swing.JFrame {
         
         javax.swing.table.DefaultTableModel tblModel = (javax.swing.table.DefaultTableModel) jTable3.getModel();
         tblModel.setRowCount(0);
-        try (java.sql.PreparedStatement stmt = cons.prepareStatement("SELECT DISTINCT harga_barang FROM beli WHERE nama_barang = ?"))
+        try (java.sql.PreparedStatement stmt = cons.prepareStatement("SELECT DISTINCT harga_barang, tanggal_nota FROM beli "
+                + "WHERE nama_barang = ? AND id_client = ?"))
         {
             stmt.setString(1, namaBarangString);
+            stmt.setInt(2, idClient);
             java.sql.ResultSet resultSet = stmt.executeQuery();
             while (resultSet.next()) {
-                String[] row = {String.format("%,d", resultSet.getInt("harga_barang"))};
-                tblModel.addRow(row);
+                tblModel.addRow(new String[] {
+                    String.format("%,d", resultSet.getInt("harga_barang")),
+                    GeneralFunction.sqlDate2String(resultSet.getDate("tanggal_nota"))
+                });
             }
         } catch (java.sql.SQLException e) {
             javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);

@@ -4,6 +4,8 @@
  */
 package com.sa.cobacoba.pelunasan;
 
+import com.sa.cobacoba.functions.GeneralFunction;
+
 public class PelunasanPiutang extends javax.swing.JPanel {
 
     java.sql.Connection cons;
@@ -22,8 +24,11 @@ public class PelunasanPiutang extends javax.swing.JPanel {
             java.sql.ResultSet resultSet = stmt.executeQuery("SELECT nama_client, kota_client FROM client ORDER BY nama_client");
             while (resultSet.next()) {
                 String nama = resultSet.getString("nama_client");
-                nama = nama.concat("/");
-                nama = nama.concat(resultSet.getString("kota_client"));
+                String kota = resultSet.getString("kota_client");
+                if (kota != null) {
+                    nama = nama.concat("/");
+                    nama = nama.concat(resultSet.getString("kota_client"));
+                }
                 namaClient.addItem(nama);
             }
         } catch (java.sql.SQLException e) {
@@ -85,9 +90,11 @@ public class PelunasanPiutang extends javax.swing.JPanel {
         jLabel1.setText("Lunas Piutang");
         jLabel1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
 
+        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nama Client");
 
+        namaClient.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
         namaClient.setToolTipText("");
         namaClient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,13 +102,20 @@ public class PelunasanPiutang extends javax.swing.JPanel {
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Nomor Transaksi");
 
+        nomorTransaksi.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+
+        jLabel5.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Tanggal Lunas");
 
+        tanggalLunas.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+
         backButton.setBackground(new java.awt.Color(51, 51, 51));
+        backButton.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
         backButton.setForeground(new java.awt.Color(255, 255, 255));
         backButton.setText("Back");
         backButton.setBorder(null);
@@ -112,6 +126,7 @@ public class PelunasanPiutang extends javax.swing.JPanel {
         });
 
         submitButton.setBackground(new java.awt.Color(51, 51, 51));
+        submitButton.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
         submitButton.setForeground(new java.awt.Color(255, 255, 255));
         submitButton.setText("Submit");
         submitButton.setBorder(null);
@@ -182,9 +197,11 @@ public class PelunasanPiutang extends javax.swing.JPanel {
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jPanel2.setPreferredSize(new java.awt.Dimension(630, 150));
 
+        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Nomor Nota");
 
+        nomorNota.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
         nomorNota.setToolTipText("");
         nomorNota.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,11 +209,13 @@ public class PelunasanPiutang extends javax.swing.JPanel {
             }
         });
 
+        peringatan.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         peringatan.setForeground(new java.awt.Color(255, 0, 0));
         peringatan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         peringatan.setText("jLabel9");
 
         addButton.setBackground(new java.awt.Color(51, 51, 51));
+        addButton.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
         addButton.setForeground(new java.awt.Color(255, 255, 255));
         addButton.setText("Add");
         addButton.setBorder(null);
@@ -207,6 +226,7 @@ public class PelunasanPiutang extends javax.swing.JPanel {
         });
 
         deleteButton.setBackground(new java.awt.Color(51, 51, 51));
+        deleteButton.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
         deleteButton.setForeground(new java.awt.Color(255, 255, 255));
         deleteButton.setText("Delete");
         deleteButton.setBorder(null);
@@ -217,7 +237,7 @@ public class PelunasanPiutang extends javax.swing.JPanel {
         });
 
         pelunasanButton.setBackground(new java.awt.Color(51, 51, 51));
-        pelunasanButton.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        pelunasanButton.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
         pelunasanButton.setForeground(new java.awt.Color(255, 255, 255));
         pelunasanButton.setText("Pelunasan");
         pelunasanButton.addActionListener(new java.awt.event.ActionListener() {
@@ -226,10 +246,14 @@ public class PelunasanPiutang extends javax.swing.JPanel {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Lunas Nota");
 
+        lunasNota.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+
         updateButton.setBackground(new java.awt.Color(51, 51, 51));
+        updateButton.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
         updateButton.setForeground(new java.awt.Color(255, 255, 255));
         updateButton.setText("Update");
         updateButton.setBorder(null);
@@ -295,7 +319,7 @@ public class PelunasanPiutang extends javax.swing.JPanel {
 
         dataPanel.add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
-        tableNota.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        tableNota.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
         tableNota.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -312,6 +336,7 @@ public class PelunasanPiutang extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tableNota.setRowHeight(25);
         tableNota.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableNotaMouseClicked(evt);
@@ -524,24 +549,49 @@ public class PelunasanPiutang extends javax.swing.JPanel {
         }
         
         
-        int id = 0;
-        try (java.sql.PreparedStatement stmt = cons.prepareStatement("SELECT id FROM client "
-                + "WHERE nama_client = ? AND kota_client = ?");
-                java.util.Scanner scan = new java.util.Scanner(namaClientString))
+        String namaCli = null, kotaCli;
+        String query;
+        try (java.util.Scanner scanner = new java.util.Scanner(namaClientString))
         {
-            scan.useDelimiter("/");
-            String nama = scan.next();
-            String kota = scan.next();
+            scanner.useDelimiter("/");
+            namaCli = scanner.next();
+            kotaCli = scanner.next();
             
-            stmt.setString(1, nama);
-            stmt.setString(2, kota);
-            java.sql.ResultSet resultSet = stmt.executeQuery();
-            while (resultSet.next()) {
-                id = resultSet.getInt("id");
-            }
-        } catch (java.sql.SQLException e) {
-            javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
+            if (kotaCli == null)
+                throw new java.util.NoSuchElementException();
+            
+        } catch (java.util.NoSuchElementException e) {
+            kotaCli = null;
         }
+        
+        int id = 0;
+        if (kotaCli == null) {
+            query = "SELECT id FROM client WHERE nama_client = ? AND kota_client IS NULL";
+            try (java.sql.PreparedStatement stmt = cons.prepareStatement(query))
+            {
+                stmt.setString(1, namaCli);
+                java.sql.ResultSet resultSet = stmt.executeQuery();
+                while (resultSet.next()) {
+                    id = resultSet.getInt("id");
+                }
+            } catch (java.sql.SQLException e) {
+                javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            query = "SELECT id FROM client WHERE nama_client = ? AND kota_client = ?";
+            try (java.sql.PreparedStatement stmt = cons.prepareStatement(query))
+            {
+                stmt.setString(1, namaCli);
+                stmt.setString(2, kotaCli);
+                java.sql.ResultSet resultSet = stmt.executeQuery();
+                while (resultSet.next()) {
+                    id = resultSet.getInt("id");
+                }
+            } catch (java.sql.SQLException e) {
+                javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
         
         
         nomorNota.removeAllItems();
@@ -599,36 +649,53 @@ public class PelunasanPiutang extends javax.swing.JPanel {
 
     private void pelunasanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pelunasanButtonActionPerformed
         // get client id
-        int id = 0;
-        String namaClientString = namaClient.getSelectedItem().toString();
-        try (java.sql.PreparedStatement stmt = cons.prepareStatement("SELECT id FROM client "
-                + "WHERE nama_client = ? AND kota_client = ?");
-                java.util.Scanner scan = new java.util.Scanner(namaClientString))
+        String namaCli = null, kotaCli;
+        String query;
+        try (java.util.Scanner scanner = new java.util.Scanner(namaClient.getSelectedItem().toString()))
         {
-            scan.useDelimiter("/");
-            String nama = scan.next();
-            String kota = scan.next();
+            scanner.useDelimiter("/");
+            namaCli = scanner.next();
+            kotaCli = scanner.next();
             
-            stmt.setString(1, nama);
-            stmt.setString(2, kota);
+            if (kotaCli == null)
+                throw new java.util.NoSuchElementException();
             
-            java.sql.ResultSet resultSet = stmt.executeQuery();
-            while (resultSet.next()) {
-                id = resultSet.getInt("id");
-            }
-        } catch (java.sql.SQLException e) {
-            javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (java.util.NoSuchElementException e) {
+            kotaCli = null;
         }
         
-        // GET TODAY DATE IN SQL
-        java.text.SimpleDateFormat simpleDateFormat = new java.text.SimpleDateFormat("dd-MM-yyyy");
-        java.sql.Date sqlDate = null;
-        try {
-            java.util.Date parsedDate = simpleDateFormat.parse(tanggalLunas.getText());
-            sqlDate = new java.sql.Date(parsedDate.getTime());
-        } catch (java.text.ParseException e) {
-            javax.swing.JOptionPane.showMessageDialog(null, "Gagal dapat tanggal hari ini", "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
+        int id = 0;
+        if (kotaCli == null) {
+            query = "SELECT id FROM client WHERE nama_client = ? AND kota_client IS NULL";
+            try (java.sql.PreparedStatement stmt = cons.prepareStatement(query))
+            {
+                stmt.setString(1, namaCli);
+                java.sql.ResultSet resultSet = stmt.executeQuery();
+                while (resultSet.next()) {
+                    id = resultSet.getInt("id");
+                }
+            } catch (java.sql.SQLException e) {
+                javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            query = "SELECT id FROM client WHERE nama_client = ? AND kota_client = ?";
+            try (java.sql.PreparedStatement stmt = cons.prepareStatement(query))
+            {
+                stmt.setString(1, namaCli);
+                stmt.setString(2, kotaCli);
+                java.sql.ResultSet resultSet = stmt.executeQuery();
+                while (resultSet.next()) {
+                    id = resultSet.getInt("id");
+                }
+            } catch (java.sql.SQLException e) {
+                javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
         }
+
+        
+        // GET TODAY DATE IN SQL
+        java.sql.Date sqlDate = GeneralFunction.date2SQLDate(tanggalLunas.getText());
+        
         
         // LOOPING
         // Hitung totalan lunas nota
