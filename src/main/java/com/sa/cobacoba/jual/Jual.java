@@ -6,10 +6,13 @@
 package com.sa.cobacoba.jual;
 
 import com.sa.cobacoba.functions.GeneralFunction;
+//import java.util.ArrayList;
+//import javax.swing.event.DocumentEvent;
+//import java.util.List;
 
 public class Jual extends javax.swing.JFrame {
     java.sql.Connection cons;
-    
+    int totalStock = 0;
     public Jual(java.sql.Connection conn) {
         initComponents();
         dataPanel.setVisible(false);
@@ -63,7 +66,7 @@ public class Jual extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        hargaBeli = new javax.swing.JTextField();
+        modal = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         hargaJual = new javax.swing.JTextField();
         jumlah = new javax.swing.JTextField();
@@ -88,9 +91,9 @@ public class Jual extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(950, 500));
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
-        jPanel1.setMinimumSize(new java.awt.Dimension(950, 500));
+        jPanel1.setMinimumSize(new java.awt.Dimension(1000, 750));
         jPanel1.setName(""); // NOI18N
-        jPanel1.setPreferredSize(new java.awt.Dimension(950, 500));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1000, 750));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         sidebarPanel.setBackground(new java.awt.Color(102, 102, 102));
@@ -124,11 +127,12 @@ public class Jual extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Nomor Nota");
 
+        nomorNota.setEditable(true);
         nomorNota.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
 
         nota.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
 
-        jLabel5.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Tanggal Nota");
 
@@ -136,6 +140,7 @@ public class Jual extends javax.swing.JFrame {
         tanggalNota.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
 
         jButton1.setBackground(new java.awt.Color(51, 51, 51));
+        jButton1.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Submit");
         jButton1.setBorder(null);
@@ -146,6 +151,7 @@ public class Jual extends javax.swing.JFrame {
         });
 
         jButton2.setBackground(new java.awt.Color(51, 51, 51));
+        jButton2.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Back");
         jButton2.setBorder(null);
@@ -173,17 +179,17 @@ public class Jual extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(namaSales, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(nomorNota, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sidebarPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(81, 81, 81))
                     .addGroup(sidebarPanelLayout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(nota, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(sidebarPanelLayout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(sidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(sidebarPanelLayout.createSequentialGroup()
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(16, 16, 16)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sidebarPanelLayout.createSequentialGroup()
@@ -240,13 +246,13 @@ public class Jual extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Harga Beli");
+        jLabel7.setText("Modal");
 
-        hargaBeli.setEditable(false);
-        hargaBeli.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
-        hargaBeli.addActionListener(new java.awt.event.ActionListener() {
+        modal.setEditable(false);
+        modal.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        modal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                hargaBeliActionPerformed(evt);
+                modalActionPerformed(evt);
             }
         });
 
@@ -332,32 +338,34 @@ public class Jual extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(peringatan, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(namaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(30, 30, 30)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(hargaBeli, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(hargaJual, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jumlah, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jumlahText, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addComponent(peringatan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(66, 66, 66)
                         .addComponent(buttonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(66, 66, 66)
+                        .addGap(132, 132, 132)
                         .addComponent(buttonUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(80, 80, 80)
-                        .addComponent(buttonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(123, Short.MAX_VALUE))
+                        .addGap(148, 148, 148)
+                        .addComponent(buttonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(15, 15, 15))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(namaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jumlah, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jumlahText, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(modal, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(hargaJual, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -370,18 +378,18 @@ public class Jual extends javax.swing.JFrame {
                         .addComponent(namaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(jPanel4Layout.createSequentialGroup()
-                            .addComponent(jumlahText, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jumlah, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel4Layout.createSequentialGroup()
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(hargaJual, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel4Layout.createSequentialGroup()
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(hargaBeli, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(modal, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addComponent(jumlahText, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jumlah, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(12, 12, 12)
                 .addComponent(peringatan)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -399,11 +407,11 @@ public class Jual extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nama Barang", "Harga Beli", "Harga jual", "Quantity"
+                "Nama Barang", "Harga jual", "Quantity", "Sub Total"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
@@ -442,9 +450,11 @@ public class Jual extends javax.swing.JFrame {
             }
         });
 
+        jLabel11.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Diskon");
 
+        diskon.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
         diskon.setText("0");
         diskon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -502,7 +512,7 @@ public class Jual extends javax.swing.JFrame {
                         .addGap(55, 55, 55)
                         .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(totalHarga, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                        .addComponent(totalHarga, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(142, 142, 142))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(91, 91, 91)
@@ -558,7 +568,7 @@ public class Jual extends javax.swing.JFrame {
             tanggalNota.setEditable(false);
             tanggalNota.setEnabled(false);
             addBarangMenu();
-            hargaBeli.setText("");
+            modal.setText("");
             hargaJual.setText("");
             jButton1.setEnabled(false);
             nota.setEditable(false);
@@ -568,16 +578,23 @@ public class Jual extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
     
     private boolean validateAll() {
-        try {
+        try (java.sql.PreparedStatement stmt = cons.prepareStatement("SELECT nomor_nota FROM jual WHERE nomor_nota = ?")){
             String langganan = namaLangganan.getSelectedItem().toString();
             String salesman = namaSales.getSelectedItem().toString();
             String hasilNomorNota = nomorNota.getSelectedItem().toString();
             String tanggalNotaHasil = tanggalNota.getSelectedItem().toString();
 
             if (langganan.isEmpty() || salesman.isEmpty() || hasilNomorNota.isEmpty() || tanggalNotaHasil.isEmpty()) {
-                throw new Exception();
+                throw new Exception("Tidak boleh ada field yang kosong");
             }
+            
+            stmt.setString(1, hasilNomorNota);
+            java.sql.ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next())
+                throw new Exception("Sudah ada nomor nota yang terpakai");
+            
         } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
             return true;
         }
         
@@ -585,22 +602,67 @@ public class Jual extends javax.swing.JFrame {
     }
     
     private void addBarangMenu() {
+//        List<String> items = new ArrayList<>();
         try {
             java.sql.Statement statement = cons.createStatement();
-            java.sql.ResultSet resultSet = statement.executeQuery("SELECT nama_barang FROM stock ORDER BY nama_barang");
+            java.sql.ResultSet resultSet = statement.executeQuery("SELECT nama_barang, stock_akhir, rusak_barang FROM stock ORDER BY nama_barang");
             while (resultSet.next()) {
-                namaBarang.addItem(resultSet.getString("nama_barang"));
+                String namaBarangString = resultSet.getString("nama_barang");
+                namaBarangString = namaBarangString.concat("|");
+                namaBarangString = namaBarangString.concat(String.valueOf(resultSet.getInt("stock_akhir")));
+                namaBarangString = namaBarangString.concat("|");
+                namaBarangString = namaBarangString.concat(String.valueOf(resultSet.getInt("rusak_barang")));
+//                items.add(namaBarangString);
+                namaBarang.addItem(namaBarangString);
             }
         } catch (java.sql.SQLException e) {
             
         } finally {
             namaBarang.setSelectedIndex(-1);
         }
+        // TODO LATER:
+        
+//        // mengambil editor dan diconvert ke text field
+//        javax.swing.JTextField textField = (javax.swing.JTextField) namaBarang.getEditor().getEditorComponent();
+//        
+//        // menambahkan listener di setiap perubahan text
+//        textField.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() { // anonymous inner class
+//            @Override
+//            public void insertUpdate(DocumentEvent e) {
+//                updateComboBox();
+//            }
+//
+//            @Override
+//            public void removeUpdate(DocumentEvent e) {
+//                updateComboBox();
+//            }
+//
+//            @Override
+//            public void changedUpdate(DocumentEvent e) {
+//                updateComboBox();
+//            }
+//            
+//            private void updateComboBox() {
+//                javax.swing.SwingUtilities.invokeLater(() -> {
+//                    String input = textField.getText();
+//                    namaBarang.removeAllItems();
+//                    
+//                    for (String item : items) {
+//                        if (item.toLowerCase().startsWith(input.toLowerCase())) {
+//                            namaBarang.addItem(item);
+//                        }
+//                    }
+//                    
+//                    textField.setText(input);
+//                    namaBarang.setPopupVisible(true);
+//                });
+//            }
+//        });
     }
     
-    private void hargaBeliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hargaBeliActionPerformed
+    private void modalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modalActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_hargaBeliActionPerformed
+    }//GEN-LAST:event_modalActionPerformed
 
     private void hargaJualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hargaJualActionPerformed
         // TODO add your handling code here:
@@ -618,41 +680,12 @@ public class Jual extends javax.swing.JFrame {
             timer.start();
         } else {
 //            ADD TO THE TABLE
-
-            String namaBarangString = namaBarang.getSelectedItem().toString();
-            int stockDb = 0;
-            int stockInt = Integer.parseInt(jumlah.getText());
-//            1. VALIDATE QUANTITY
-
-            try (java.sql.Statement statement = cons.createStatement())
-            {
-                java.sql.ResultSet resultSet = statement.executeQuery("SELECT * FROM stock WHERE nama_barang = '" + namaBarangString + "'");
-                while (resultSet.next()) {
-                    stockDb = resultSet.getInt("stock_akhir");
-                    if (stockInt > stockDb) {
-                        throw new java.lang.NumberFormatException("Jumlah melebihi stock yang dipunya");
-                    }
-                }
-            } catch (java.sql.SQLException | java.lang.NumberFormatException e) {
-                javax.swing.Timer timer = new javax.swing.Timer(5000, e2 -> peringatan.setVisible(false));
-                timer.setRepeats(false);
-                peringatan.setText(e.getMessage());
-                peringatan.setVisible(true);
-                timer.start();
-                return;
-            }
-
             javax.swing.table.DefaultTableModel tblModel = (javax.swing.table.DefaultTableModel) tableJual.getModel();
-            int totalStock = 0;
-            for (int i = 0; i < tblModel.getRowCount(); i++) {
-                String namaBarangTable = tblModel.getValueAt(i, 0).toString();
-                if (namaBarangTable.equals(namaBarangString)) {
-                    int stockTable = Integer.parseInt(tblModel.getValueAt(i, 3).toString());
-                    totalStock += stockTable;
-                }
-            }
+            String namaBarangString = getNamaBarang();
+            int stockInt = Integer.parseInt(jumlah.getText());
             
-            if (totalStock + stockInt > stockDb) {
+//            1. VALIDATE QUANTITY
+            if (stockInt > totalStock) {
                 javax.swing.Timer timer = new javax.swing.Timer(5000, e -> peringatan.setVisible(false));
                 timer.setRepeats(false);
                 peringatan.setText("Total barang yang dijual melebihi stock yang dipunyai");
@@ -661,22 +694,49 @@ public class Jual extends javax.swing.JFrame {
                 return;
             }
 
+            int modalInt = Integer.parseInt(modal.getText());
+            int jualInt = Integer.parseInt(hargaJual.getText());
+            
+            if (jualInt <= modalInt) {
+                int status = javax.swing.JOptionPane.showConfirmDialog(null, 
+                        "Harga jual dibawah modal, apakah tetap melanjutkan?", 
+                        "SURE?", 
+                        javax.swing.JOptionPane.YES_NO_OPTION);
+                if (status != 0)
+                    return;
+            }
+
 
 //            2. ADD TO TABLE
-            String[] data = {namaBarangString, hargaBeli.getText(), hargaJual.getText(), jumlah.getText()};
-            tblModel.addRow(data);
+            tblModel.addRow(new String[] {
+                namaBarangString,
+                String.format("%,d", jualInt),
+                jumlah.getText(),
+                String.valueOf(jualInt * stockInt)
+            });
             
 
 //            3. CLEAR THE FIELD
             namaBarang.setSelectedIndex(-1);
-            hargaBeli.setText("");
+            modal.setText("");
             hargaJual.setText("");
             jumlah.setText("");
+            jumlahText.setText("Jumlah: 0");
             
 //            4. UPDATE HARGA DAN TOTAL HARGA
             updateHarga();
         }
     }//GEN-LAST:event_buttonAddActionPerformed
+    
+    private String getNamaBarang() {
+        try
+        {
+            String namaBarangString = namaBarang.getSelectedItem().toString();
+            return namaBarangString.split("\\|")[0];
+        } catch (java.lang.NullPointerException | java.util.NoSuchElementException e) {
+            return null;
+        }
+    }
     
     private boolean validateFormTambah() {
         try {
@@ -709,10 +769,9 @@ public class Jual extends javax.swing.JFrame {
         }
         
         for (int i = 0; i < tblModel.getRowCount(); i++) {
-            long hargaLong = Long.parseLong(tblModel.getValueAt(i, 2).toString());
-            long qty = Long.parseLong(tblModel.getValueAt(i, 3).toString());
-            hargaTotalLong += hargaLong * qty;
+            hargaTotalLong += Long.parseLong(tblModel.getValueAt(i, 3).toString());
         }
+        
         harga.setText(String.valueOf(hargaTotalLong));
         double diskonLong = Double.parseDouble(diskon.getText()) / 100;
         long totalHargaDiskonLong = hargaTotalLong - Math.round(hargaTotalLong * diskonLong);
@@ -731,67 +790,49 @@ public class Jual extends javax.swing.JFrame {
             }
             
 //            VALIDATE QUANTITY
-            String namaBarangString = namaBarang.getSelectedItem().toString();
+            String namaBarangString = getNamaBarang();
             int stockInt = Integer.parseInt(jumlah.getText());
-            int stockDb = 0;
-            try {
-                java.sql.Statement statement = cons.createStatement();
-                java.sql.ResultSet resultSet = statement.executeQuery("SELECT * FROM stock WHERE nama_barang = '" + namaBarangString + "'");
-                while (resultSet.next()) {
-                    stockDb = resultSet.getInt("stock_akhir");
-                    if (stockInt > stockDb) {
-                        throw new NumberFormatException("Jumlah melebihi stock yang dipunya");
-                    }
-                }
-            } catch (java.sql.SQLException | java.lang.NumberFormatException e) {
-                javax.swing.Timer timer = new javax.swing.Timer(5000, e2 -> peringatan.setVisible(false));
-                timer.setRepeats(false);
-                peringatan.setText(e.getMessage());
-                peringatan.setVisible(true);
-                timer.start();
-                return;
-            }
-            
-            
-            int stockLama = Integer.parseInt(tblModel.getValueAt(tableJual.getSelectedRow(), 3).toString());
-            tblModel.setValueAt(String.valueOf(stockInt), tableJual.getSelectedRow(), 3);
-            int totalStock = 0;
-            for (int i = 0; i < tblModel.getRowCount(); i++) {
-                String namaBarangTable = tblModel.getValueAt(i, 0).toString();
-                if (namaBarangTable.equals(namaBarangString)) {
-                    int stockTable = Integer.parseInt(tblModel.getValueAt(i, 3).toString());
-                    totalStock += stockTable;
-                }
-            }
-            
-            if (totalStock > stockDb) {
+            totalStock += Integer.parseInt(tblModel.getValueAt(tableJual.getSelectedRow(), 2).toString());
+            if (stockInt > totalStock) {
                 javax.swing.Timer timer = new javax.swing.Timer(5000, e -> peringatan.setVisible(false));
-                timer.setRepeats(false);
-                peringatan.setText("Total barang yang dijual melebihi stock yang dipunyai");
+                peringatan.setText("Barang melebihi stock");
                 peringatan.setVisible(true);
+                timer.setRepeats(false);
                 timer.start();
-                tblModel.setValueAt(String.valueOf(stockLama), tableJual.getSelectedRow(), 3);
                 return;
             }
             
             
 //            UPDATE
-            String hargaBeliString = hargaBeli.getText();
+            String modalString = modal.getText();
             String hargaJualString = hargaJual.getText();
             String jumlahString = jumlah.getText();
             
+            int modalInt = Integer.parseInt(modalString);
+            int jualInt = Integer.parseInt(hargaJual.getText());
+            int jumlahInt = Integer.parseInt(jumlah.getText());
+            if (jualInt <= modalInt) {
+                int status = javax.swing.JOptionPane.showConfirmDialog(null, 
+                        "Harga jual dibawah modal, apakah tetap melanjutkan?", 
+                        "SURE?", 
+                        javax.swing.JOptionPane.YES_NO_OPTION);
+                if (status != 0)
+                    return; 
+            }
+            
             tblModel.setValueAt(namaBarangString, tableJual.getSelectedRow(), 0);
-            tblModel.setValueAt(hargaBeliString, tableJual.getSelectedRow(), 1);
-            tblModel.setValueAt(hargaJualString, tableJual.getSelectedRow(), 2);
-            tblModel.setValueAt(jumlahString, tableJual.getSelectedRow(), 3);
+            tblModel.setValueAt(String.format("%,d", jualInt), tableJual.getSelectedRow(), 1);
+            tblModel.setValueAt(jumlahString, tableJual.getSelectedRow(), 2);
+            tblModel.setValueAt(String.valueOf(jualInt * jumlahInt), tableJual.getSelectedRow(), 3);
             
             javax.swing.JOptionPane.showMessageDialog(null, "Data berhasil diupdate", "SUCCESS", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             
 //            SET ALL TO DEFAULT VALUES
             namaBarang.setSelectedIndex(-1);
-            hargaBeli.setText("");
+            modal.setText("");
             hargaJual.setText("");
             jumlah.setText("");
+            jumlahText.setText("Jumlah: 0");
             
 //            UPDATE HARGA DAN TOTAL HARGA
             updateHarga();
@@ -811,7 +852,7 @@ public class Jual extends javax.swing.JFrame {
                 
 //                SET ALL DEFAULT VALUES
                 namaBarang.setSelectedIndex(-1);
-                hargaBeli.setText("");
+                modal.setText("");
                 hargaJual.setText("");
                 jumlah.setText("");
                 
@@ -850,23 +891,46 @@ public class Jual extends javax.swing.JFrame {
     }//GEN-LAST:event_namaSalesActionPerformed
 
     private void namaBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_namaBarangActionPerformed
+        javax.swing.table.DefaultTableModel tblModel = (javax.swing.table.DefaultTableModel) tableJual.getModel();
         try {
-            String namaBarangString = namaBarang.getSelectedItem().toString();
-            if (namaBarangString.isEmpty()) {
-                throw new Exception();
+            String namaBarangString;
+            String namaBarangCurr;
+            // get totalStock
+            try {
+                namaBarangString = namaBarang.getSelectedItem().toString();
+                String[] parts = namaBarangString.split("\\|");
+                namaBarangCurr = parts[0];
+                int currStock = Integer.parseInt(parts[1]);
+                int currRusak = Integer.parseInt(parts[2]);
+                totalStock = currStock + currRusak;
+
+                if (tblModel.getRowCount() != 0) {
+                    for (int i = 0; i < tblModel.getRowCount(); i++) {
+                        String namaBarangTable = tblModel.getValueAt(i, 0).toString();
+                        if (namaBarangTable.equals(namaBarangCurr)) {
+                            int stockTable = Integer.parseInt(tblModel.getValueAt(i, 2).toString());
+                            totalStock -= stockTable;
+                        }
+                    }
+                }
+            } catch (java.lang.NullPointerException | java.lang.NumberFormatException ex) {
+                jumlahText.setText("Jumlah: 0");
+                return;
             }
+            
+            
+            // get modal n hargaJual
             java.sql.Statement statement = cons.createStatement();
-            java.sql.ResultSet resultSet = statement.executeQuery("SELECT * FROM stock WHERE nama_barang = '" + namaBarangString + "'");
+            java.sql.ResultSet resultSet = statement.executeQuery("SELECT * FROM stock WHERE nama_barang = '" + namaBarangCurr + "'");
             while (resultSet.next()) {
-                int beli = resultSet.getInt("harga_barang");
+                int modalInt = resultSet.getInt("modal");
                 int jual = resultSet.getInt("jual_barang");
-                int stockInt = resultSet.getInt("stock_akhir");
                 
-                hargaBeli.setText(String.valueOf(beli));
+                modal.setText(String.valueOf(modalInt));
                 hargaJual.setText(String.valueOf(jual));
-                jumlahText.setText("Jumlah: " + String.valueOf(stockInt));
+                jumlahText.setText("Jumlah: " + String.valueOf(totalStock));
             }
-        } catch (Exception e) {
+        } catch (java.sql.SQLException e) {
             jumlahText.setText("Jumlah: 0");
         }
     }//GEN-LAST:event_namaBarangActionPerformed
@@ -903,14 +967,50 @@ public class Jual extends javax.swing.JFrame {
     private void tableJualMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableJualMouseClicked
         javax.swing.table.DefaultTableModel tblModel = (javax.swing.table.DefaultTableModel) tableJual.getModel();
         String namaBarangString = tblModel.getValueAt(tableJual.getSelectedRow(), 0).toString();
-        String hargaBeliString = tblModel.getValueAt(tableJual.getSelectedRow(), 1).toString();
-        String hargaJualString = tblModel.getValueAt(tableJual.getSelectedRow(), 2).toString();
-        String jumlahString = tblModel.getValueAt(tableJual.getSelectedRow(), 3).toString();
+        String hargaJualString = tblModel.getValueAt(tableJual.getSelectedRow(), 1).toString();
+        String jumlahString = tblModel.getValueAt(tableJual.getSelectedRow(), 2).toString();
         
-        namaBarang.setSelectedItem(namaBarangString);
-        hargaBeli.setText(hargaBeliString);
+        String selectedItem = null;
+        int itemCount = namaBarang.getItemCount();
+        for (int i = 0; i < itemCount; i++) {
+            if (namaBarang.getItemAt(i).startsWith(namaBarangString + "|")) {
+                selectedItem = namaBarang.getItemAt(i);
+                break;
+            }
+        }
+        
+        if (hargaJualString.contains(","))
+            hargaJualString = hargaJualString.replaceAll(",", "");
+        else if (hargaJualString.contains("."))
+            hargaJualString = hargaJualString.replaceAll("\\.", "");
+        
+        namaBarang.setSelectedItem(selectedItem);
         hargaJual.setText(hargaJualString);
         jumlah.setText(jumlahString);
+        
+        
+        // dapatkan modal dan set ulang totalStock
+        try (java.sql.PreparedStatement stmt = cons.prepareStatement("SELECT modal, stock_akhir, rusak_barang FROM stock WHERE nama_barang = ?"))
+        {
+            stmt.setString(1, namaBarangString);
+            java.sql.ResultSet resultSet = stmt.executeQuery();
+            while (resultSet.next()) {
+                modal.setText(String.valueOf(resultSet.getInt("modal")));
+                totalStock = resultSet.getInt("stock_akhir") + resultSet.getInt("rusak_barang");
+            }
+        } catch (java.sql.SQLException e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "Tidak bisa mendapat modal", "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
+        // update tulisan jumlah
+        for (int i = 0; i < tblModel.getRowCount(); i++) {
+            String namaBarangTable = tblModel.getValueAt(i, 0).toString();
+            if (namaBarangTable.equals(namaBarangString)) {
+                int stockTable = Integer.parseInt(tblModel.getValueAt(i, 2).toString());
+                totalStock -= stockTable;
+            }
+        }
     }//GEN-LAST:event_tableJualMouseClicked
 
     private void jualButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jualButtonActionPerformed
@@ -989,8 +1089,16 @@ public class Jual extends javax.swing.JFrame {
 //            LOOPING DI SETIAP TABLE SAMBIL:
             for (int i = 0; i < tblModel.getRowCount(); i++) {
                 String namaBarangString = tblModel.getValueAt(i, 0).toString();
-                int hargaJualInt = Integer.parseInt(tblModel.getValueAt(i, 2).toString());
-                int stockInt = Integer.parseInt(tblModel.getValueAt(i, 3).toString());
+                String hargaJualString = tblModel.getValueAt(i, 1).toString();
+                        
+                if (hargaJualString.contains(","))
+                    hargaJualString = hargaJualString.replaceAll(",", "");
+                else if (hargaJualString.contains("."))
+                    hargaJualString = hargaJualString.replaceAll("\\.", "");
+                
+                int hargaJualInt = Integer.parseInt(hargaJualString);
+                int stockInt = Integer.parseInt(tblModel.getValueAt(i, 2).toString());
+                int totalHargaInt = Integer.parseInt(tblModel.getValueAt(i, 3).toString());
 
 
 //              KURANGIN STOCK DI stock
@@ -1018,7 +1126,7 @@ public class Jual extends javax.swing.JFrame {
                     stmt.setString(5, namaBarangString);
                     stmt.setInt(6, hargaJualInt);
                     stmt.setInt(7, stockInt);
-                    stmt.setInt(8, hargaJualInt * stockInt);
+                    stmt.setInt(8, totalHargaInt);
                     stmt.setDouble(9, Double.parseDouble(diskon.getText()) / 100);
                     stmt.execute();
                 } catch (java.sql.SQLException e) {
@@ -1133,7 +1241,6 @@ public class Jual extends javax.swing.JFrame {
     private javax.swing.JPanel dataPanel;
     private javax.swing.JTextField diskon;
     private javax.swing.JTextField harga;
-    private javax.swing.JTextField hargaBeli;
     private javax.swing.JTextField hargaJual;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -1156,6 +1263,7 @@ public class Jual extends javax.swing.JFrame {
     private javax.swing.JButton jualButton;
     private javax.swing.JTextField jumlah;
     private javax.swing.JLabel jumlahText;
+    private javax.swing.JTextField modal;
     private javax.swing.JComboBox<String> namaBarang;
     private javax.swing.JComboBox<String> namaLangganan;
     private javax.swing.JComboBox<String> namaSales;

@@ -2,6 +2,7 @@ com/sa/cobacoba/edit/EditUtang$3.class
 com/sa/cobacoba/edit/EditPembelian$2.class
 com/sa/cobacoba/MainWindow$10.class
 com/sa/cobacoba/MainWindow.class
+com/sa/cobacoba/setting/RestorePanel.class
 com/sa/cobacoba/lihat/LihatLaba$1.class
 com/sa/cobacoba/retur/ReturPenjualan$8.class
 com/sa/cobacoba/jual/Jual$11.class
@@ -38,6 +39,7 @@ com/sa/cobacoba/edit/EditReturPembelian$3.class
 com/sa/cobacoba/retur/ReturPenjualan$9.class
 com/sa/cobacoba/retur/ReturPenjualan$3.class
 com/sa/cobacoba/edit/EditReturPenjualan$6.class
+com/sa/cobacoba/setting/RestorePanel$1.class
 com/sa/cobacoba/retur/ReturPembelian$6.class
 com/sa/cobacoba/lihat/LihatDataNota.class
 com/sa/cobacoba/MainWindow$6.class
@@ -173,6 +175,7 @@ com/sa/cobacoba/lihat/LihatDataNota$2.class
 com/sa/cobacoba/edit/EditDaftar$11.class
 com/sa/cobacoba/edit/EditReturPenjualan$7.class
 com/sa/cobacoba/jual/Jual$14.class
+com/sa/cobacoba/setting/RestorePanel$2.class
 com/sa/cobacoba/edit/EditPembelian$6.class
 com/sa/cobacoba/MainWindow$5.class
 com/sa/cobacoba/lihat/LihatPiutangSemua.class
@@ -211,6 +214,7 @@ com/sa/cobacoba/edit/EditPembelian$1.class
 com/sa/cobacoba/jual/Jual$16.class
 com/sa/cobacoba/tambah/TambahLanggananPanel$1.class
 com/sa/cobacoba/edit/EditPenjualan$7.class
+com/sa/cobacoba/setting/SettingWindow$2.class
 com/sa/cobacoba/edit/EditWindow.class
 com/sa/cobacoba/pelunasan/PelunasanPiutang$3.class
 com/sa/cobacoba/edit/EditWindow$7.class
@@ -222,6 +226,8 @@ com/sa/cobacoba/retur/ReturPembelian$9.class
 com/sa/cobacoba/edit/PilihanMenuJual$1.class
 com/sa/cobacoba/lihat/LihatPiutangSemua$2.class
 com/sa/cobacoba/jual/Jual$17.class
+com/sa/cobacoba/setting/SettingWindow$1.class
+com/sa/cobacoba/setting/SettingWindow.class
 com/sa/cobacoba/edit/EditPembelian$3.class
 com/sa/cobacoba/lihat/LihatDataNotaPembelian.class
 com/sa/cobacoba/pelunasan/PelunasanPiutang$4.class

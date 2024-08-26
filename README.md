@@ -9,7 +9,7 @@ CREATE DATABASE db_sa;
 USE db_sa
 ```
 
-3. Buat table dengan salid kode sebagai berikut:
+3. Buat table dengan salin kode sebagai berikut:
 - Table Stock
 ```bash
 CREATE TABLE stock (
@@ -24,6 +24,19 @@ CREATE TABLE stock (
     satuan_barang VARCHAR(10) NOT NULL,
     modal INT NOT NULL,
     rusak_barang INT NOT NULL DEFAULT 0,
+    PRIMARY KEY (id)
+);
+```
+
+- Table Salesman
+```bash
+CREATE TABLE salesman (
+    id INT NOT NULL AUTO_INCREMENT,
+    nama_sales VARCHAR(100) NOT NULL,
+    no_depan INT NULL,
+    no_nota INT NOT NULL,
+    no_telp_sales VARCHAR(20) NULL,
+    kode_sales VARCHAR(20) NOT NULL,
     PRIMARY KEY (id)
 );
 ```

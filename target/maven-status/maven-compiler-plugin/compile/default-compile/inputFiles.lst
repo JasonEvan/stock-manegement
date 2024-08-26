@@ -25,6 +25,7 @@
 /Users/jasonevan/Documents/Java/cobacoba/src/main/java/com/sa/cobacoba/edit/PilihanMenuBeli.java
 /Users/jasonevan/Documents/Java/cobacoba/src/main/java/com/sa/cobacoba/lihat/LihatDataNotaPembelian.java
 /Users/jasonevan/Documents/Java/cobacoba/src/main/java/com/sa/cobacoba/pelunasan/PelunasanUtang.java
+/Users/jasonevan/Documents/Java/cobacoba/src/main/java/com/sa/cobacoba/setting/RestorePanel.java
 /Users/jasonevan/Documents/Java/cobacoba/src/main/java/com/sa/cobacoba/jual/Jual.java
 /Users/jasonevan/Documents/Java/cobacoba/src/main/java/com/sa/cobacoba/lihat/LihatKartuPersediaan.java
 /Users/jasonevan/Documents/Java/cobacoba/src/main/java/com/sa/cobacoba/edit/EditPiutang.java
@@ -32,3 +33,4 @@
 /Users/jasonevan/Documents/Java/cobacoba/src/main/java/com/sa/cobacoba/edit/EditDaftar.java
 /Users/jasonevan/Documents/Java/cobacoba/src/main/java/com/sa/cobacoba/pelunasan/PelunasanPiutang.java
 /Users/jasonevan/Documents/Java/cobacoba/src/main/java/com/sa/cobacoba/tambah/TambahSuppPanel.java
+/Users/jasonevan/Documents/Java/cobacoba/src/main/java/com/sa/cobacoba/setting/SettingWindow.java

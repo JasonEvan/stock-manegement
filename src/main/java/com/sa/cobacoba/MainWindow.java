@@ -48,7 +48,7 @@ public class MainWindow extends javax.swing.JFrame {
         lihatButton = new javax.swing.JButton();
         jual = new javax.swing.JButton();
         pelunasanButton = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        settingButton = new javax.swing.JButton();
         editButton = new javax.swing.JButton();
         retur = new javax.swing.JButton();
 
@@ -148,13 +148,13 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setBackground(new java.awt.Color(51, 51, 51));
-        jButton5.setFont(new java.awt.Font("Yu Gothic", 0, 18)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Piutang");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        settingButton.setBackground(new java.awt.Color(51, 51, 51));
+        settingButton.setFont(new java.awt.Font("Yu Gothic", 0, 18)); // NOI18N
+        settingButton.setForeground(new java.awt.Color(255, 255, 255));
+        settingButton.setText("Settings");
+        settingButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                settingButtonActionPerformed(evt);
             }
         });
 
@@ -187,7 +187,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(settingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -217,7 +217,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(pelunasanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(settingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -261,8 +261,9 @@ public class MainWindow extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+    private void settingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        new com.sa.cobacoba.setting.SettingWindow(connection).setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
@@ -316,7 +317,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton editButton;
     private javax.swing.JButton exitButton;
     private javax.swing.JButton pelunasanButton;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton settingButton;
     private javax.swing.JButton retur;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
